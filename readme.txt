@@ -1,4 +1,4 @@
---Readme document for *author(s)*, *email(s)*, *UCI id(s)*--
+--Readme document for Jaelyn Tran, jaelynt1@uci.edu, 61716269--
 
 1. How many assignment points do you believe you completed (replace the *'s with your numbers)?
 
