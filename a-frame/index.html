@@ -9,6 +9,63 @@
     <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
     <script src="timezone.js"></script>
     <script src="clock.js"></script>
+    <style>
+      .converter-container {
+        position: fixed;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        z-index: 10;
+        color: white;
+      }
+
+      .converter-container input {
+        width: 60%;
+        box-sizing: border-box;
+        padding: 15px;
+        margin: 10px;
+        font-size: 20px;
+        border-radius: 10px;
+        font-family: "sourcecodepro", monospace;
+      }
+
+      .converter-container select {
+        padding: 15px;
+        margin: 10px;
+        font-size: 20px;
+        border-radius: 10px;
+        font-family: "sourcecodepro", monospace;
+      }
+
+      .converter-container button {
+        padding: 15px;
+        margin: 10px;
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #00ff00;
+        border: none;
+        color: black;
+        font-weight: bold;
+        border-radius: 5px;
+        font-family: "sourcecodepro", monospace;
+      }
+
+      .converter-container button:hover {
+        background-color: #007700;
+      }
+
+      .converter-container p {
+        margin-top: 15px;
+      }
+
+      .converter-message {
+        font-family: "sourcecodepro", monospace;
+        font-size: 20px;
+      }
+    </style>
   </head>
   
   <body>
@@ -19,5 +76,16 @@
       ></a-entity>
       <a-sky color="#222"></a-sky>
     </a-scene>
+
+    <div class="converter-container">
+      <input type="text" id="user-time" placeholder="Enter time (e.g., 2:42pm)"/>
+      <select id="timezone-select">
+        <option value="Hawaii">Hawaii</option>
+        <option value="Vietnam">Vietnam</option>
+        <option value="Iceland">Iceland</option>
+      </select>
+      <button onclick="convertUserTime()">Convert Time</button>
+      <p class="converter-message" id="converted-time"></p>
+    </div>
   </body>
 </html>
