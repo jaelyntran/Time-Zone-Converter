@@ -1,60 +1,19 @@
 AFRAME.registerComponent("clock", {
-  schema: {
-  },
+  schema: {},
 
   init: function () {
-    //Create a new element, set 
     this.titleEl = document.createElement("a-text");
-    this.titleEl.setAttribute("position", { x: 1.3, y: -0.7, z: 0 });
+    this.titleEl.setAttribute("position", { x: 1.3, y: -1.05, z: 0 });
     this.titleEl.setAttribute("color", "#00ff00");
     this.titleEl.setAttribute("font", "sourcecodepro");
     this.titleEl.setAttribute("value", "Informatics World Clock");
     this.el.appendChild(this.titleEl);
 
     this.currentTimeEl = document.createElement("a-text");
-    this.currentTimeEl.setAttribute("position", { x: 1.695, y: -1, z: 0 });
+    this.currentTimeEl.setAttribute("position", { x: 1.5, y: -1.35, z: 0 });
     this.currentTimeEl.setAttribute("color", "#ffffff");
     this.currentTimeEl.setAttribute("font", "sourcecodepro");
     this.el.appendChild(this.currentTimeEl);
-
-    this.hawaiiTimeEl = document.createElement("a-text");
-    this.hawaiiTimeEl.setAttribute("position", { x: 0.75, y: -1.5, z: 0 });
-    this.hawaiiTimeEl.setAttribute("color", "#00ff00");
-    this.hawaiiTimeEl.setAttribute("font", "sourcecodepro");
-    this.el.appendChild(this.hawaiiTimeEl);
-
-    this.vietnamTimeEl = document.createElement("a-text");
-    this.vietnamTimeEl.setAttribute("position", { x: 2.4, y: -1.5, z: 0 });
-    this.vietnamTimeEl.setAttribute("color", "#00ff00");
-    this.vietnamTimeEl.setAttribute("font", "sourcecodepro");
-    this.el.appendChild(this.vietnamTimeEl);
-
-    this.icelandTimeEl = document.createElement("a-text");
-    this.icelandTimeEl.setAttribute("position", { x: 3.95, y: -1.5, z: 0 });
-    this.icelandTimeEl.setAttribute("color", "#00ff00");
-    this.icelandTimeEl.setAttribute("font", "sourcecodepro");
-    this.el.appendChild(this.icelandTimeEl);
-
-    this.hawaiiLabelEl = document.createElement("a-text");
-    this.hawaiiLabelEl.setAttribute("position", { x: 0.76, y: -1.8, z: 0 });
-    this.hawaiiLabelEl.setAttribute("color", "#00ff00");
-    this.hawaiiLabelEl.setAttribute("font", "sourcecodepro");
-    this.hawaiiLabelEl.setAttribute("value", "Hawaii");
-    this.el.appendChild(this.hawaiiLabelEl);
-
-    this.vietnamLabelEl = document.createElement("a-text");
-    this.vietnamLabelEl.setAttribute("position", { x: 2.35, y: -1.8, z: 0 });
-    this.vietnamLabelEl.setAttribute("color", "#00ff00");
-    this.vietnamLabelEl.setAttribute("font", "sourcecodepro");
-    this.vietnamLabelEl.setAttribute("value", "Vietnam");
-    this.el.appendChild(this.vietnamLabelEl);
-
-    this.icelandLabelEl = document.createElement("a-text");
-    this.icelandLabelEl.setAttribute("position", { x: 3.955, y: -1.8, z: 0 });
-    this.icelandLabelEl.setAttribute("color", "#00ff00");
-    this.icelandLabelEl.setAttribute("font", "sourcecodepro");
-    this.icelandLabelEl.setAttribute("value", "Iceland");
-    this.el.appendChild(this.icelandLabelEl);
 
     this.updateTime();
   },
@@ -65,43 +24,91 @@ AFRAME.registerComponent("clock", {
 
   updateTime: function () {
     var now = spacetime.now();
-    this.currentTimeEl.setAttribute("value", displayTime(now) + " local time");
-    this.hawaiiTimeEl.setAttribute("value", displayTime(convertTimeZone(now, "Hawaii")));
-    this.vietnamTimeEl.setAttribute("value", displayTime(convertTimeZone(now, "Vietnam")));
-    this.icelandTimeEl.setAttribute("value", displayTime(convertTimeZone(now, "Iceland")));
+    this.currentTimeEl.setAttribute("value", `Current Time: ${displayTime(now)}`);
   }
 });
 
-function convertUserTime() {
-  let userInput = document.getElementById("user-time").value;
-  let selectedZone = document.getElementById("timezone-select").value;
 
-  if (!userInput) {
-    document.getElementById("converted-time").innerText = "Please enter a valid time!";
-    return;
+AFRAME.registerComponent('timezone-converter', {
+  init: function () {
+    this.timeZoneEl = document.createElement("a-text");
+    this.timeZoneEl.setAttribute("position", {x: 1.15, y: -0.95, z: 0});
+    this.timeZoneEl.setAttribute("color", "#00ff00");
+    this.timeZoneEl.setAttribute("font", "sourcecodepro");
+    this.timeZoneEl.setAttribute("value", "Select Timezone to Convert");
+    this.el.appendChild(this.timeZoneEl);
+  },
+});
+
+window.onload = function() {
+  function clearPreviousResults() {
+    const scene = document.querySelector('a-scene');
+    const previousResults = scene.querySelectorAll('.result-text');
+    previousResults.forEach(result => {
+      result.parentElement.removeChild(result);
+    });
   }
 
-  let userTime = getTime(userInput);
-  let convertedTime = convertTimeZone(userTime, selectedZone);
+  document.querySelector('#hawaiiButton').addEventListener('click', function () {
+    console.log("hawaii");
+    clearPreviousResults();
+    var now = spacetime.now();
+    var convertedTime = convertTimeZone(now, "Hawaii");
+    console.log(displayTime(convertedTime));
 
-  if (convertedTime) {
-    document.getElementById("converted-time").innerText = `${userInput} in local time`
-                                                                  + ` is ${displayTime(convertedTime)} in ${selectedZone}`;
-  } else {
-    document.getElementById("converted-time").innerText = "Invalid time zone selected.";
-  }
-}
+    if (convertedTime) {
+      var result = document.createElement("a-text");
+      result.setAttribute("position", {x: -2, y: 0.85, z: -1.75});
+      result.setAttribute("color", "#00ff00");
+      result.setAttribute("font", "sourcecodepro");
+      result.setAttribute(
+          "value",
+          `It's currently ${displayTime(convertedTime)} in Hawaii`
+      );
+      result.classList.add('result-text');
+      document.querySelector("a-scene").appendChild(result);
+    }
+  })
 
-var now = spacetime.now();
+  document.querySelector('#vietnamButton').addEventListener('click', function () {
+    console.log("vietnam");
+    clearPreviousResults();
+    var now = spacetime.now();
+    var convertedTime = convertTimeZone(now, "Vietnam");
+    console.log(displayTime(convertedTime));
 
-console.log("It is currently " + displayTime(now) + " locally");
-console.log(
-  "It is currently " +
-    displayTime(convertTimeZone(now, "London")) +
-    " in London"
-);
-console.log(
-  "2:42pm in local time is " +
-    displayTime(convertTimeZone(getTime("2:42pm"), "Hawaii")) +
-    " in Hawaii"
-);
+    if (convertedTime) {
+      var result = document.createElement("a-text");
+      result.setAttribute("position", {x: -2, y: 0.85, z: -1.75});
+      result.setAttribute("color", "#00ff00");
+      result.setAttribute("font", "sourcecodepro");
+      result.setAttribute(
+          "value",
+          `It's currently ${displayTime(convertedTime)} in Vietnam`
+      );
+      result.classList.add('result-text');
+      document.querySelector("a-scene").appendChild(result);
+    }
+  })
+
+  document.querySelector('#australiaButton').addEventListener('click', function () {
+    console.log("australia");
+    clearPreviousResults();
+    var now = spacetime.now();
+    var convertedTime = convertTimeZone(now, "Australia");
+    console.log(displayTime(convertedTime));
+
+    if (convertedTime) {
+      var result = document.createElement("a-text");
+      result.setAttribute("position", {x: -2, y: 0.85, z: -1.75});
+      result.setAttribute("color", "#00ff00");
+      result.setAttribute("font", "sourcecodepro");
+      result.setAttribute(
+          "value",
+          `It's currently ${displayTime(convertedTime)} in Australia`
+      );
+      result.classList.add('result-text');
+      document.querySelector("a-scene").appendChild(result);
+    }
+  })
+};
