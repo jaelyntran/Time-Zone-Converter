@@ -15,6 +15,8 @@
 3. What online resources did you consult when completing this assignment? (list specific URLs)
 https://www.youtube.com/watch?v=tTaQOgefjDM
 https://aframe.io/docs/1.7.0/introduction/javascript-events-dom-apis.html
+https://aframe.io/docs/1.7.0/primitives/a-box.html
+https://stackoverflow.com/questions/38987416/how-do-you-create-an-aframe-button
 
 4. What classmates or other individuals did you consult as part of this assignment? What did you discuss?
 I just read Slack thread to see what I could do regarding Alexa Skills not building and
