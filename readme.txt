@@ -6,11 +6,11 @@
 - 1/1 The ability to display or speak the current local time
 - 3/3 The ability to convert the current local time to another time zone
 - 1/1 A demo video demonstrating these features
-- 5/5 Answers to questions about how the framework supports implementation
+- 4/5 Answers to questions about how the framework supports implementation
 - 0/0 Any extra credit options implemented
 
 2. How long, in hours, did it take you to complete this assignment?
-10 hours
+15 hours
 
 3. What online resources did you consult when completing this assignment? (list specific URLs)
 https://www.youtube.com/watch?v=tTaQOgefjDM
@@ -23,8 +23,8 @@ I just read Slack thread to see what I could do regarding Alexa Skills not build
 got advised to switch to A-Frame due to its simple set up.
 
 5. Is there anything special we need to know in order to run your code?
-For the time converter with user input is implemented under the assumption that the user only enter valid values,
-such as times in a correct 12-hour AM/PM format.
+The time display for other timezone, unlike local time, will not update in real time.
+It only updates when the buttons are clicked.
 
 6. Did you implement any extra credit options? If so, which ones?
 N/A
